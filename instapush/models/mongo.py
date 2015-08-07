@@ -3,7 +3,7 @@ import mongoengine
 from django.conf import settings
 from django.utils import timezone
 
-from .managers import APNSMongoQuerySet, GCMMongoQuerySet
+from .querysets import APNSMongoQuerySet, GCMMongoQuerySet
 
 
 instapush_settings = settings.get('INSTAPUSH_SETTINGS')
