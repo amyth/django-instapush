@@ -9,7 +9,7 @@ try:
     from urllib.request import Request, urlopen
     from urllib.parse import urlencode
 except ImportError:
-    from urllib2.request import Request, urlopen
+    from urllib2 import Request, urlopen
     from urllib import urlencode
 
 from django.core.exceptions import ImproperlyConfigured
@@ -83,10 +83,10 @@ class GCMMessenger(object):
         items = ids or self._registration_id
         values = {"registration_ids": items}
 
-        if data is not None:
-            values["data"] = data
+        if self._data is not None:
+            values["data"] = self._data
 
-        for key, val in self._kwargs.items()
+        for key, val in self._kwargs.items():
             if val:
                 values[key] = val
 
@@ -99,7 +99,7 @@ class GCMMessenger(object):
             unregistered = []
             throw_error = False
 
-            for index, error in enumerate(results.get("results", [])]):
+            for index, error in enumerate(results.get("results", [])):
                 error = error.get("error", "")
                 if error in ("NotRegistered", "InvalidRegistration"):
                     unregistered.append(items[index])
@@ -113,7 +113,7 @@ class GCMMessenger(object):
         return result
 
     def send_bulk(self):
-        if len(self.registration_id) > self.max_recipients:
+        if len(self._registration_id) > self.max_recipients:
             result = []
             for chunk in self._chunks():
                 result.append(self.send_json(ids=chunk))
