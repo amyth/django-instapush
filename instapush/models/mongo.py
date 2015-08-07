@@ -6,7 +6,15 @@ from django.utils import timezone
 from .querysets import APNSMongoQuerySet, GCMMongoQuerySet
 
 
-instapush_settings = settings.get('INSTAPUSH_SETTINGS')
+try:
+    instapush_settings = settings.INSTAPUSH_SETTINGS
+except AttributeError:
+    raise ImproperlyConfigured("Please include instapush settings dictionary "\
+            "in your django settings")
+
+
+class BaseOwner(mongoengine.Document):
+    pass
 
 
 class BaseDevice(mongoengine.Document):
@@ -19,7 +27,7 @@ class BaseDevice(mongoengine.Document):
     name = mongoengine.StringField()
     active = mongoengine.BooleanField(default=True)
     user = mongoengine.ReferenceField(instapush_settings.get(
-        'DEVICE_OWNER_MODEL'), required=False)
+        'DEVICE_OWNER_MODEL', BaseOwner), required=False)
     date_created = mongoengine.DateTimeField(default=timezone.now())
 
     meta = {'collection': 'devices', 'allow_inheritance': True}

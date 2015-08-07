@@ -6,7 +6,11 @@ from .fields import HexIntegerField
 from .managers import  APNSDeviceManager, GCMDeviceManager
 
 
-instapush_settings = settings.get('INSTAPUSH_SETTINGS')
+try:
+    instapush_settings = settings.INSTAPUSH_SETTINGS
+except AttributeError:
+    raise ImproperlyConfigured("Please include instapush settings dictionary "\
+            "in your django settings")
 
 
 class BaseDevice(models.Model):
