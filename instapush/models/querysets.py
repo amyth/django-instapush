@@ -1,4 +1,5 @@
 from django.db import models
+from mongoengine.queryset import QuerySet
 
 
 class GCMMessageMixin(object):
@@ -34,3 +35,18 @@ class APNSQuerySet(APNSMessageMixin, models.query.QuerySet):
     Implements additional methods to be used by this queryset.
     """
     pass
+
+
+class GCMMongoQuerySet(GCMMessageMixin, QuerySet):
+    """
+    Defines additional methods to be used by GCM mongo query set
+    """
+    pass
+
+
+class APNSMongoQuerySet(APNSMessageMixin, QuerySet):
+    """
+    Defines additional methods to be used by APNS mongo query set
+    """
+    pass
+
