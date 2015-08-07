@@ -3,7 +3,7 @@ import mongoengine
 from django.conf import settings
 from django.utils import timezone
 
-from .managers import GCMMongoQuerySet
+from .managers import APNSMongoQuerySet, GCMMongoQuerySet
 
 
 instapush_settings = settings.get('INSTAPUSH_SETTINGS')
@@ -48,3 +48,25 @@ class GCMDevice(BaseDevice):
 
         return gcm_send_message(registration_id=self.registration_id,
                 data=data, **kwargs)
+
+
+class APNSDevice(BaseDevice):
+    """
+    This document represents an iOS device that uses APNS
+    to send push notifications.
+    """
+
+    device_id = mongoengine.StringField()
+    registration_id = mongoengine.StringField()
+
+    meta = {
+        'queryset_class': APNSMongoQuerySet,
+        'indexes': [{'fields': ['device_id'], 'unique': True, 'sparse': True}]
+    }
+
+    def send_message(self, message, **kwargs):
+        #TODO: uncomment the following once APNS is implemented
+        #from instapush.libs.apns import apns_send_message
+        #return apns_send_message(registration_id-self.registration_id,
+        #        alert=message, **kwargs)
+        pass
