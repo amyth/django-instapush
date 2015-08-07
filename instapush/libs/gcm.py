@@ -15,7 +15,7 @@ except ImportError:
 from django.core.exceptions import ImproperlyConfigured
 
 from ..exceptions import GCMPushError
-from ..settings import PUSH_SETTINGS as settings
+from ..settings import INSTAPUSH_SETTINGS as settings
 
 
 class GCMMessenger(object):

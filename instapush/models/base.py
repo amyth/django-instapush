@@ -6,7 +6,7 @@ from .fields import HexIntegerField
 from .managers import  APNSDeviceManager, GCMDeviceManager
 
 
-push_settings = settings.get('PUSH_SETTINGS')
+instapush_settings = settings.get('INSTAPUSH_SETTINGS')
 
 
 class BaseDevice(models.Model):
@@ -26,7 +26,7 @@ class BaseDevice(models.Model):
     ## does not have to be related to any model this
     ## can be left empty and hence blank and null are
     ## set to True
-    owner = models.ForeignKey(push_settings.get('DEVICE_OWNER_MODEL'),
+    owner = models.ForeignKey(instapush_settings.get('DEVICE_OWNER_MODEL'),
             blank=True, null=True)
 
     created = models.DateTimeField(_('created'), auto_now_add=True)
@@ -61,7 +61,7 @@ class GCMDevice(BaseDevice):
         Sends a push notification to this device via GCM
         """
 
-        from push.libs.gcm import gcm_send_message
+        from instapush.libs.gcm import gcm_send_message
         data = kwargs.pop("extra", {})
         if message is not None:
             data["message"] = message
@@ -88,6 +88,6 @@ class APNSDevice(Device):
         verbose_name_plural = _('APNS Devices')
 
     def send_message(self, message, **kwargs):
-        from push.libs.apns import apns_send_message
+        from instapush.libs.apns import apns_send_message
         return apns_send_message(registration_id=self.registration_id,
                 alert=message, **kwargs)
