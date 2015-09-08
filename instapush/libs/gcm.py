@@ -12,6 +12,7 @@ except ImportError:
     from urllib2 import Request, urlopen
     from urllib import urlencode
 
+from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
 
 from ..exceptions import GCMPushError
@@ -99,7 +100,7 @@ class GCMMessenger(object):
             unregistered = []
             throw_error = False
 
-            for index, error in enumerate(results.get("results", [])):
+            for index, error in enumerate(result.get("results", [])):
                 error = error.get("error", "")
                 if error in ("NotRegistered", "InvalidRegistration"):
                     unregistered.append(items[index])
@@ -120,6 +121,11 @@ class GCMMessenger(object):
 
             return result
         return self.send_json()
+
+    def deactivate_unregistered_devices(self, rids):
+        deactivate_callback = getattr(settings, 'DEACTIVATE_UNREG_CALLBACK')
+        deactivate_callback(rids)
+
 
     def _send(self, data, content_type):
         """

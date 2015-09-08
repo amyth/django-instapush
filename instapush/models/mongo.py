@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from .querysets import APNSMongoQuerySet, GCMMongoQuerySet
+from ..utils import get_model
 
 
 try:
@@ -26,8 +27,8 @@ class BaseDevice(mongoengine.Document):
 
     name = mongoengine.StringField()
     active = mongoengine.BooleanField(default=True)
-    user = mongoengine.ReferenceField(instapush_settings.get(
-        'DEVICE_OWNER_MODEL', BaseOwner), required=False)
+    owner = mongoengine.ReferenceField(get_model(instapush_settings.get(
+        'DEVICE_OWNER_MODEL')), required=False)
     date_created = mongoengine.DateTimeField(default=timezone.now())
 
     meta = {'collection': 'devices', 'allow_inheritance': True}
@@ -48,11 +49,11 @@ class GCMDevice(BaseDevice):
         'indexes': [{'fields': ['device_id'], 'unique': True, 'sparse': True}]
     }
 
-    def send_message(self, message, **kwargs):
-        from instapush.lib.gcm import gcm_send_message
-        data = kwargs.pop("extra", {})
-        if message is not None:
-            data['message'] = message
+    def send_message(self, data, **kwargs):
+        from ..libs.gcm import gcm_send_message
+
+        extra_data = kwargs.pop("extra", {})
+        data.update(extra_data)
 
         return gcm_send_message(registration_id=self.registration_id,
                 data=data, **kwargs)
@@ -74,7 +75,7 @@ class APNSDevice(BaseDevice):
 
     def send_message(self, message, **kwargs):
         #TODO: uncomment the following once APNS is implemented
-        #from instapush.libs.apns import apns_send_message
+        #from ..libs.apns import apns_send_message
         #return apns_send_message(registration_id-self.registration_id,
         #        alert=message, **kwargs)
         pass

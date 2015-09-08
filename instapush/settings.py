@@ -1,12 +1,16 @@
 from django.conf import settings
 
 
+def gcm_deactivate(rids):
+    pass
+
 INSTAPUSH_SETTINGS = getattr(settings, 'INSTAPUSH_SETTINGS', {})
 
 ## GCM Settings
 GCM_SETTINGS = INSTAPUSH_SETTINGS.get('GCM_SETTINGS', {})
 GCM_SETTINGS.setdefault('API_URL', 'https://android.googleapis.com/gcm/send')
 GCM_SETTINGS.setdefault('MAX_RECIPIENTS', 1000)
+GCM_SETTINGS.setdefault('DEACTIVATE_UNREG_CALLBACK', gcm_deactivate)
 
 
 ## APNS Settings

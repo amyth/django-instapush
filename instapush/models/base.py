@@ -65,7 +65,7 @@ class GCMDevice(BaseDevice):
         Sends a push notification to this device via GCM
         """
 
-        from instapush.libs.gcm import gcm_send_message
+        from ..libs.gcm import gcm_send_message
         data = kwargs.pop("extra", {})
         if message is not None:
             data["message"] = message
@@ -74,7 +74,7 @@ class GCMDevice(BaseDevice):
                 data=data, **kwargs)
 
 
-class APNSDevice(Device):
+class APNSDevice(BaseDevice):
     """
     Represents an iOS device
     """
@@ -92,6 +92,6 @@ class APNSDevice(Device):
         verbose_name_plural = _('APNS Devices')
 
     def send_message(self, message, **kwargs):
-        from instapush.libs.apns import apns_send_message
+        from ..libs.apns import apns_send_message
         return apns_send_message(registration_id=self.registration_id,
                 alert=message, **kwargs)
