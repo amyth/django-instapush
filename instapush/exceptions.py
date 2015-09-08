@@ -16,3 +16,13 @@ class GCMPushError(PushError):
 
 class APNSPushError(PushError):
     pass
+
+
+class APNSDataOverflow(APNSPushError):
+    pass
+
+class APNSServerError(APNSPushError):
+    def __init__(self, status, identifier):
+        super(APNSServerError, self).__init__(status, identifier)
+        self.status = status
+        self.identifier = identifier

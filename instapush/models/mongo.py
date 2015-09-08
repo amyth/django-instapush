@@ -4,14 +4,8 @@ from django.conf import settings
 from django.utils import timezone
 
 from .querysets import APNSMongoQuerySet, GCMMongoQuerySet
+from ..settings import INSTAPUSH_SETTINGS as instapush_settings
 from ..utils import get_model
-
-
-try:
-    instapush_settings = settings.INSTAPUSH_SETTINGS
-except AttributeError:
-    raise ImproperlyConfigured("Please include instapush settings dictionary "\
-            "in your django settings")
 
 
 class BaseOwner(mongoengine.Document):
@@ -74,8 +68,6 @@ class APNSDevice(BaseDevice):
     }
 
     def send_message(self, message, **kwargs):
-        #TODO: uncomment the following once APNS is implemented
-        #from ..libs.apns import apns_send_message
-        #return apns_send_message(registration_id-self.registration_id,
-        #        alert=message, **kwargs)
-        pass
+        from ..libs.apns import apns_send_message
+        return apns_send_message(registration_id=self.registration_id,
+                alert=message, **kwargs)
