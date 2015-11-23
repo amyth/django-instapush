@@ -92,11 +92,14 @@ def _apns_check_errors(sock):
         sock.settimeout(saved_timeout)
 
 
-def _apns_send(token, alert, badge=None, sound=None, category=None, content_available=False,
+def _apns_send(token, alert, badge=None, sound="default", category=None, content_available=True,
     action_loc_key=None, loc_key=None, loc_args=[], extra={}, identifier=0,
     expiration=None, priority=10, socket=None):
     data = {}
     aps_data = {}
+
+    custom_params = alert
+    alert = custom_params.pop('message')
 
     if action_loc_key or loc_key or loc_args:
         alert = {"body": alert} if alert else {}
@@ -121,6 +124,9 @@ def _apns_send(token, alert, badge=None, sound=None, category=None, content_avai
 
     if content_available:
         aps_data["content-available"] = 1
+
+    if custom_params.keys():
+        aps_data['custom_params'] = {'data': custom_params}
 
     data["aps"] = aps_data
     data.update(extra)
