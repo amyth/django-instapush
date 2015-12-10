@@ -3,6 +3,9 @@
 
 This django app can be used to send [gcm](https://developers.google.com/cloud-messaging/) and [apns](https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html) push notifications to mobile devices. The app implements models for sql based databases and monogoengine documents. You can specify the settings to either use a sql based model or a mongoengine model to store your device data.
 
+## Documentation
+For tutorial and documentation > [Click Here](http://www.techstricks.com/django-push-notifications-mongoengine/)
+
 ##Models
 ---
 **SQL Models**
