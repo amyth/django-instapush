@@ -17,7 +17,7 @@ setup(
             'device data',
     zip_safe=False,
     install_requires=[
-        'requests>=2.8.1'
+        'requests>=2.8.1',
         'requests-toolbelt>=0.4.0'
     ]
 )
