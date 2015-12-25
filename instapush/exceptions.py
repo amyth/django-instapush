@@ -7,7 +7,7 @@ class PushError(Exception):
     def __init__(self, message=None):
         if message:
             self.message = message
-        return super(GCMPushError, self).__init__(message)
+        return super(PushError, self).__init__(message)
 
 
 class GCMPushError(PushError):
@@ -20,6 +20,7 @@ class APNSPushError(PushError):
 
 class APNSDataOverflow(APNSPushError):
     pass
+
 
 class APNSServerError(APNSPushError):
     def __init__(self, status, identifier):

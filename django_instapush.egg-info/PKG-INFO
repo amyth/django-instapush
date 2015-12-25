@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: django-instapush
+Version: 1.0.0
+Summary: Send push notifications to android and ios devices
+Home-page: https://github.com/amyth/django-instapush
+Author: Amyth Arora
+Author-email: mail@amythsingh.com
+License: MIT License
+Description: Django Instapush can be used to send GCM and APNS notifications to android and ios devices respectively. This package supports both mysql and mongoengine models to store device data
+Platform: UNKNOWN

@@ -1,0 +1,2 @@
+include AUTHORS README LICENSE
+recursive-include instapush *.py *.js *.html *.css
