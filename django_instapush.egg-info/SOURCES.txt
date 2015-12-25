@@ -5,6 +5,7 @@ django_instapush.egg-info/PKG-INFO
 django_instapush.egg-info/SOURCES.txt
 django_instapush.egg-info/dependency_links.txt
 django_instapush.egg-info/not-zip-safe
+django_instapush.egg-info/requires.txt
 django_instapush.egg-info/top_level.txt
 instapush/__init__.py
 instapush/exceptions.py
