@@ -16,8 +16,7 @@ setup(
             'package supports both mysql and mongoengine models to store '\
             'device data',
     zip_safe=False,
-    install_requires=['mongoengine>=0.10.0',
-        'pymongo>=3.0.3',
+    install_requires=[
         'requests>=2.8.1'
         'requests-toolbelt>=0.4.0'
     ]
