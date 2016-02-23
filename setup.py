@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-instapush',
-    version='1.0.1',
+    version='1.0.2',
     author='Amyth Arora',
     author_email='mail@amythsingh.com',
     packages=find_packages(),

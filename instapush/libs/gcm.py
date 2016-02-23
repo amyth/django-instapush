@@ -28,6 +28,9 @@ class GCMMessenger(object):
         self._kwargs = kwargs
         self.encoding = encoding
 
+        for k,v in kwargs.items():
+            setattr(self, k, v)
+
         ## Check for required settings
         self._prepare_settings()
 
@@ -42,12 +45,13 @@ class GCMMessenger(object):
 
         for x in cons:
             item = gcm_settings.get(x)
-            if not item:
+            if (not item) and (not hasattr(self, x.lower())):
                 raise ImproperlyConfigured("Please add %s to your "\
                         "GCM_SETTINGS to send notifications through gcm" % x)
 
         for x in gcm_settings:
-            setattr(self, x.lower(), gcm_settings[x])
+            if not hasattr(self, x.lower()):
+                setattr(self, x.lower(), gcm_settings[x])
 
     def send_plain(self):
         """
