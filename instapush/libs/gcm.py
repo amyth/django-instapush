@@ -127,7 +127,8 @@ class GCMMessenger(object):
         return self.send_json()
 
     def deactivate_unregistered_devices(self, rids):
-        deactivate_callback = getattr(settings, 'DEACTIVATE_UNREG_CALLBACK')
+        deactivate_callback = settings.get('GCM_SETTINGS').get(
+                'DEACTIVATE_UNREG_CALLBACK')
         deactivate_callback(rids)
 
 
