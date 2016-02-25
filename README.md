@@ -154,6 +154,9 @@ INSTAPUSH_SETTINGS = {
 } 
 ```
 
+####**sites that uses django-instapush**
+[Odd Even Car Pool](http://www.oddevenrides.com/)
+
 ## Contact & Social
 ---
 
