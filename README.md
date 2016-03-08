@@ -155,7 +155,8 @@ INSTAPUSH_SETTINGS = {
 ```
 
 ####**sites that uses django-instapush**
-[Odd Even Car Pool](http://www.oddevenrides.com/)
+OddevenRides - [Odd Even Car Pool](http://www.oddevenrides.com/)
+Pushwatch - [Online GCM and APNS push notification tester](http://www.pushwatch.com)
 
 ## Contact & Social
 ---
