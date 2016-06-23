@@ -93,13 +93,13 @@ def _apns_check_errors(sock):
 
 
 def _apns_send(token, alert, badge=None, sound="default", category=None, content_available=True,
-    action_loc_key=None, loc_key=None, loc_args=[], extra={}, identifier=0,
-    expiration=None, priority=10, socket=None, **kwargs):
+    action_loc_key=None, loc_key=None, loc_args=[], title_loc_key=None, title_loc_args=None,
+    extra={}, identifier=0, expiration=None, priority=10, socket=None, **kwargs):
     data = {}
     aps_data = {}
 
     custom_params = alert
-    alert = custom_params.pop('message')
+    alert = custom_params.pop('message', '')
 
     if action_loc_key or loc_key or loc_args:
         alert = {"body": alert} if alert else {}
@@ -109,6 +109,12 @@ def _apns_send(token, alert, badge=None, sound="default", category=None, content
             alert["loc-key"] = loc_key
         if loc_args:
             alert["loc-args"] = loc_args
+
+    if title_loc_key:
+        alert['title_loc_key'] = title_loc_key
+
+    if title_loc_args:
+        alert['title_loc_args'] = title_loc_args
 
     if alert is not None:
         aps_data["alert"] = alert
